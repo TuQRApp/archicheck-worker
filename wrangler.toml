@@ -1,0 +1,10 @@
+name = "archicheck-worker"
+main = "worker.js"
+compatibility_date = "2025-01-01"
+
+# El frontend se despliega en Vercel — el Worker solo maneja API requests
+# assets apunta a public/ (carpeta vacía) para no subir node_modules de archicheck
+assets = { directory = "./public" }
+
+# Secrets (agregar via: wrangler secret put NOMBRE)
+# ANTHROPIC_API_KEY, OPENAI_API_KEY, SUPABASE_URL, SUPABASE_KEY
