@@ -24,13 +24,17 @@ export const REGLAS_APRENDIDAS = [
   },
 ];
 
-/** Construye el bloque de reglas aprendidas para el system prompt. Vacío si no hay reglas. */
+/**
+ * Construye el bloque de reglas aprendidas para el system prompt. Vacío si no hay reglas.
+ * `origen`/`fecha` son metadata de trazabilidad para quien mantiene este archivo (de qué
+ * caso salió la regla) — no viajan al prompt: este bloque se inyecta en TODO análisis,
+ * de cualquier comuna o proyecto, y el nombre de un caso de prueba puntual no le aporta
+ * nada al modelo ni debería aparecer en el análisis de un proyecto ajeno.
+ */
 export function buildReglasAprendidasSystem() {
   if (!REGLAS_APRENDIDAS.length) return "";
 
-  const bloque = REGLAS_APRENDIDAS
-    .map((r) => `- ${r.regla} (origen: ${r.origen}, ${r.fecha})`)
-    .join("\n");
+  const bloque = REGLAS_APRENDIDAS.map((r) => `- ${r.regla}`).join("\n");
 
   return `INSTRUCCIÓN: Las siguientes son reglas aprendidas de casos reales validados por arquitectos. Aplicalas al interpretar el plano y al analizar el expediente:\n\n${bloque}`;
 }
